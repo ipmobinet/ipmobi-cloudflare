@@ -60,11 +60,8 @@ authRouter.post('/register', async (c) => {
 
     await db.createSession({
       user_id: userId,
-      token_hash: refreshTokenHash,
-      ip_address: c.req.header('CF-Connecting-IP') || c.req.header('x-forwarded-for') || null,
-      user_agent: c.req.header('user-agent') || null,
+      token: refreshTokenHash,
       expires_at: now + 30 * 86400,
-      revoked: 0,
     })
 
     // Audit log
@@ -158,11 +155,8 @@ authRouter.post('/login', async (c) => {
     try {
       await db.createSession({
         user_id: user.id,
-        token_hash: refreshTokenHash,
-        ip_address: c.req.header('CF-Connecting-IP') || c.req.header('x-forwarded-for') || null,
-        user_agent: c.req.header('user-agent') || null,
+        token: refreshTokenHash,
         expires_at: now + 30 * 86400,
-        revoked: 0,
       })
     } catch (sessionErr: any) {
       console.error('createSession error:', sessionErr)
@@ -252,9 +246,7 @@ authRouter.post('/refresh', async (c) => {
 
     await db.createSession({
       user_id: matchedSession.user_id,
-      token_hash: newRefreshHash,
-      ip_address: c.req.header('CF-Connecting-IP') || null,
-      user_agent: c.req.header('user-agent') || null,
+        token: newRefreshHash,
       expires_at: now + 30 * 86400,
     })
 

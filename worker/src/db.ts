@@ -15,12 +15,9 @@ export type UserRow = {
 export type SessionRow = {
   id: string
   user_id: string
-  token_hash: string
-  ip_address: string | null
-  user_agent: string | null
+  token: string
   expires_at: number
   created_at: number
-  revoked: number
 }
 
 export type ApiKeyRow = {
@@ -115,32 +112,30 @@ export class DB {
   async createSession(session: Omit<SessionRow, 'id' | 'created_at'> & { id?: string; created_at?: number }): Promise<void> {
     const id = session.id || crypto.randomUUID()
     const now = session.created_at || Math.floor(Date.now() / 1000)
-    const revoked = session.revoked ?? 0
     await this.d1.prepare(
-      `INSERT INTO sessions (id, user_id, token_hash, ip_address, user_agent, expires_at, created_at, revoked)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-    ).bind(id, session.user_id, session.token_hash, session.ip_address,
-      session.user_agent, session.expires_at, now, revoked).run()
+      `INSERT INTO sessions (id, user_id, token, expires_at, created_at)
+       VALUES (?, ?, ?, ?, ?)`,
+    ).bind(id, session.user_id, session.token, session.expires_at, now).run()
   }
 
-  async findSessionByToken(tokenHash: string): Promise<(SessionRow & { email: string; role: string }) | null> {
+  async findSessionByToken(token: string): Promise<(SessionRow & { email: string; role: string }) | null> {
     const res = await this.d1.prepare(
       `SELECT s.*, u.email, u.role FROM sessions s
        JOIN users u ON u.id = s.user_id
-       WHERE s.token_hash = ? AND s.revoked = 0 AND s.expires_at > ?`,
-    ).bind(tokenHash, Math.floor(Date.now() / 1000)).first<any>()
+       WHERE s.token = ? AND s.expires_at > ?`,
+    ).bind(token, Math.floor(Date.now() / 1000)).first<any>()
     return res || null
   }
 
-  async revokeSession(tokenHash: string): Promise<void> {
+  async revokeSession(token: string): Promise<void> {
     await this.d1.prepare(
-      'UPDATE sessions SET revoked = 1 WHERE token_hash = ?',
-    ).bind(tokenHash).run()
+      'DELETE FROM sessions WHERE token = ?',
+    ).bind(token).run()
   }
 
   async revokeAllUserSessions(userId: string): Promise<void> {
     await this.d1.prepare(
-      'UPDATE sessions SET revoked = 1 WHERE user_id = ?',
+      'DELETE FROM sessions WHERE user_id = ?',
     ).bind(userId).run()
   }
 
