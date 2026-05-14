@@ -23,10 +23,8 @@ export type SessionRow = {
 export type ApiKeyRow = {
   id: string
   user_id: string
-  name: string
   key_hash: string
-  key_prefix: string
-  scopes: string
+  name: string
   last_used_at: number | null
   expires_at: number | null
   is_active: number
@@ -144,10 +142,10 @@ export class DB {
     const id = key.id || crypto.randomUUID()
     const now = key.created_at || Math.floor(Date.now() / 1000)
     await this.d1.prepare(
-      `INSERT INTO api_keys (id, user_id, name, key_hash, key_prefix, scopes, last_used_at, expires_at, is_active, created_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    ).bind(id, key.user_id, key.name, key.key_hash, key.key_prefix,
-      key.scopes, key.last_used_at, key.expires_at, key.is_active, now).run()
+      `INSERT INTO api_keys (id, user_id, name, key_hash, last_used_at, expires_at, is_active, created_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+    ).bind(id, key.user_id, key.name, key.key_hash, key.last_used_at,
+      key.expires_at, key.is_active, now).run()
   }
 
   async findApiKeysByUserId(userId: string): Promise<ApiKeyRow[]> {
