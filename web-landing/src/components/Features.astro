@@ -1,0 +1,113 @@
+---
+const features = [
+  {
+    title: 'Real Mobile IPs',
+    desc: 'Authentic 4G/5G residential IPs from major Malaysian and Southeast Asian carriers. Not datacenter — real mobile traffic.',
+    icon: '📡',
+  },
+  {
+    title: 'Unlimited Bandwidth',
+    desc: 'No throttling, no caps. Pay for what you use with transparent pricing and no hidden fees.',
+    icon: '⚡',
+  },
+  {
+    title: 'Global Coverage',
+    desc: 'Proxies from Malaysia, Singapore, Indonesia, Thailand, and expanding globally. Target any market.',
+    icon: '🌍',
+  },
+  {
+    title: 'Enterprise Reliability',
+    desc: '99.9% uptime SLA with automatic failover. 24/7 monitoring and dedicated support team.',
+    icon: '🛡️',
+  },
+  {
+    title: 'Easy Integration',
+    desc: 'Standard HTTP/S proxy protocol. Works with any tool — curl, Scrapy, Puppeteer, Playwright, and more.',
+    icon: '🔌',
+  },
+  {
+    title: 'Sticky Sessions',
+    desc: 'Keep the same IP for as long as you need. Perfect for session-based scraping and automation.',
+    icon: '🎯',
+  },
+]
+
+const highlights = [
+  { title: 'China Cross-Border E-commerce', desc: 'Access Taobao, JD.com, and other Chinese platforms from local mobile IPs.' },
+  { title: 'Ad Verification', desc: 'Verify ad placements across Southeast Asian markets with real mobile devices.' },
+  { title: 'Sneaker & Dropship Automation', desc: 'Bypass bot detection with real 4G/5G mobile IPs.' },
+  { title: 'SEO Monitoring', desc: 'Check search rankings from different locations with mobile-grade IPs.' },
+]
+---
+
+<section id="features" class="section features">
+  <div class="container">
+    <h2 class="section-title">Why <span class="gradient-text">IPMOBI</span></h2>
+    <p class="section-subtitle">Enterprise-grade mobile proxy infrastructure built for demanding workloads.</p>
+
+    <div class="features-grid">
+      {features.map(f => (
+        <div class="feature-card">
+          <div class="feature-icon">{f.icon}</div>
+          <h3 class="feature-title">{f.title}</h3>
+          <p class="feature-desc">{f.desc}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="use-cases">
+      <h3 class="use-cases-title">Built for</h3>
+      <div class="use-cases-grid">
+        {highlights.map(h => (
+          <div class="use-case-card">
+            <h4>{h.title}</h4>
+            <p>{h.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 80px;
+  }
+  .feature-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+    transition: all 0.2s;
+  }
+  .feature-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+  .feature-icon { font-size: 2rem; margin-bottom: 16px; }
+  .feature-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+  .feature-desc { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7; }
+
+  .use-cases {
+    text-align: center;
+  }
+  .use-cases-title {
+    font-size: 1.5rem; font-weight: 700; margin-bottom: 32px;
+  }
+  .use-cases-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .use-case-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    text-align: left;
+  }
+  .use-case-card h4 { font-size: 1rem; font-weight: 600; margin-bottom: 8px; }
+  .use-case-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+
+  @media (max-width: 900px) { .features-grid { grid-template-columns: 1fr; } .use-cases-grid { grid-template-columns: 1fr; } }
+</style>

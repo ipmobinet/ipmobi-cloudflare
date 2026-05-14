@@ -1,0 +1,87 @@
+# ──────────────────────────────────────────────
+# IPMOBI — Cloudflare Wrangler Configuration
+# ──────────────────────────────────────────────
+
+# ===== Routes =====
+# Production: api.ipmobi.net -> Worker
+# Staging:    staging-api.ipmobi.net -> Worker (preview env)
+
+# ─── Worker: API Backend ──────────────────────
+name = "ipmobi-api"
+main = "worker/src/index.ts"
+compatibility_date = "2026-05-14"
+compatibility_flags = ["nodejs_compat"]
+
+workers_dev = true                # enables *.workers.dev route
+# route = { pattern = "api.ipmobi.net/*", zone_id = "${ZONE_ID}" }
+
+# ─── Environment: Production ──────────────────
+[env.production]
+name = "ipmobi-api-prod"
+routes = [{ pattern = "api.ipmobi.net/*", zone_id = "${ZONE_ID}" }]
+
+[env.production.vars]
+ENVIRONMENT = "production"
+SENTRY_DSN = ""
+SENTRY_ENVIRONMENT = "production"
+
+# ─── Environment: Staging ─────────────────────
+[env.staging]
+name = "ipmobi-api-staging"
+routes = [{ pattern = "staging-api.ipmobi.net/*", zone_id = "${ZONE_ID}" }]
+
+[env.staging.vars]
+ENVIRONMENT = "staging"
+SENTRY_DSN = ""
+SENTRY_ENVIRONMENT = "staging"
+
+# ─── Shared Variables ─────────────────────────
+[vars]
+ENVIRONMENT = "development"
+LOG_LEVEL = "debug"
+CORS_ORIGIN = "*"
+
+# ─── Secrets (set via `npx wrangler secret put <KEY>`) ──
+# SECRET_KEY
+# COINBASE_API_KEY
+# COINBASE_WEBHOOK_SECRET
+# SENTRY_DSN
+# DATABASE_URL
+# RESEND_API_KEY
+# JWT_SECRET
+# OPENAI_API_KEY
+
+# ─── KV Namespaces ────────────────────────────
+# [[kv_namespaces]]
+# binding = "IPMOBI_KV"
+# id = ""
+# preview_id = ""
+
+# ─── R2 Buckets ───────────────────────────────
+# [[r2_buckets]]
+# binding = "IPMOBI_ASSETS"
+# bucket_name = "ipmobi-assets"
+
+# ─── D1 Database ──────────────────────────────
+# [[d1_databases]]
+# binding = "IPMOBI_DB"
+# database_name = "ipmobi-db"
+# database_id = ""
+# preview_database_id = ""
+
+# ─── Queues ───────────────────────────────────
+# [[queues.producers]]
+# binding = "IPMOBI_QUEUE"
+# queue = "ipmobi-tasks"
+
+# ─── AI Gateway ───────────────────────────────
+# [ai]
+# binding = "AI"
+
+# ─── Pages Projects ───────────────────────────
+# These are deployed separately (not via this wrangler.toml).
+# Each Pages project has its own wrangler.toml or dashboard config.
+#
+#   client-a  -> ipmobi-client-a.pages.dev  (customer dashboard)
+#   client-b  -> ipmobi-client-b.pages.dev  (proxy portal)
+#   landing   -> ipmobi-landing.pages.dev   (marketing site)

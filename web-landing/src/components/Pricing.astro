@@ -1,0 +1,130 @@
+---
+const plans = [
+  {
+    name: 'Starter',
+    price: '$0.27',
+    unit: '/GB',
+    desc: 'Perfect for small projects and testing.',
+    features: ['1 GB bandwidth included', '50 concurrent proxies', 'Standard support', '7-day logs'],
+    cta: 'Start Free',
+    popular: false,
+  },
+  {
+    name: 'Business',
+    price: '$0.18',
+    unit: '/GB',
+    desc: 'For growing teams and production workloads.',
+    features: ['50 GB bandwidth included', '500 concurrent proxies', 'Priority support', '30-day logs', 'API access', 'Sticky sessions'],
+    cta: 'Get Started',
+    popular: true,
+  },
+  {
+    name: 'Enterprise',
+    price: 'Custom',
+    unit: '',
+    desc: 'Dedicated infrastructure for large-scale operations.',
+    features: ['Unlimited bandwidth', 'Unlimited proxies', 'Dedicated account manager', 'Custom integration', 'SLA guarantee', 'On-premise option'],
+    cta: 'Contact Sales',
+    popular: false,
+  },
+]
+---
+
+<section id="pricing" class="section pricing">
+  <div class="container">
+    <h2 class="section-title">Simple <span class="gradient-text">Pricing</span></h2>
+    <p class="section-subtitle">Transparent pricing with no hidden fees. Pay only for what you use.</p>
+
+    <div class="pricing-grid">
+      {plans.map(p => (
+        <div class={`pricing-card ${p.popular ? 'pricing-card--popular' : ''}`}>
+          {p.popular && <div class="popular-badge">Most Popular</div>}
+          <h3 class="pricing-name">{p.name}</h3>
+          <div class="pricing-price">
+            <span class="pricing-amount">{p.price}</span>
+            {p.unit && <span class="pricing-unit">{p.unit}</span>}
+          </div>
+          <p class="pricing-desc">{p.desc}</p>
+          <ul class="pricing-features">
+            {p.features.map(f => <li>{f}</li>)}
+          </ul>
+          <a href="https://portal.ipmobi.net" class={`btn ${p.popular ? 'btn--primary' : 'btn--outline'} pricing-cta`}>
+            {p.cta} →
+          </a>
+        </div>
+      ))}
+    </div>
+
+    <div class="pricing-compare">
+      <p class="pricing-compare-title">Compare with competitors</p>
+      <table class="compare-table">
+        <tr><td>IPMOBI</td><td><strong>$0.27/GB</strong></td><td class="compare-check">✅</td></tr>
+        <tr><td>BrightData</td><td>$13.50/GB</td><td>❌</td></tr>
+        <tr><td>Oxylabs</td><td>$12.00/GB</td><td>❌</td></tr>
+        <tr><td>Smartproxy</td><td>$0.73/GB</td><td>❌</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+  .pricing-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 40px 32px;
+    position: relative;
+    transition: all 0.2s;
+  }
+  .pricing-card:hover { border-color: var(--accent); }
+  .pricing-card--popular {
+    border-color: var(--accent);
+    transform: scale(1.05);
+    box-shadow: 0 0 40px var(--accent-glow);
+  }
+  .popular-badge {
+    position: absolute;
+    top: -12px; left: 50%; transform: translateX(-50%);
+    background: var(--accent-gradient);
+    color: white;
+    padding: 4px 16px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  .pricing-name { font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; }
+  .pricing-price { margin-bottom: 12px; }
+  .pricing-amount { font-size: 2.5rem; font-weight: 800; }
+  .pricing-unit { color: var(--text-muted); font-size: 1rem; }
+  .pricing-desc { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 24px; }
+  .pricing-features { list-style: none; margin-bottom: 28px; }
+  .pricing-features li {
+    padding: 8px 0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+  .pricing-features li::before { content: '✓ '; color: var(--accent); }
+  .pricing-cta { width: 100%; justify-content: center; }
+
+  .pricing-compare {
+    margin-top: 64px;
+    text-align: center;
+  }
+  .pricing-compare-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 20px; }
+  .compare-table {
+    margin: 0 auto;
+    max-width: 400px;
+    border-collapse: collapse;
+    text-align: left;
+  }
+  .compare-table td { padding: 10px 16px; border-bottom: 1px solid var(--border); }
+  .compare-check { color: var(--success); text-align: center; }
+
+  @media (max-width: 900px) { .pricing-grid { grid-template-columns: 1fr; } .pricing-card--popular { transform: none; } }
+</style>

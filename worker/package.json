@@ -1,0 +1,19 @@
+{
+  "name": "@ipmobi/worker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "IPMOBI API — Cloudflare Worker (Hono)",
+  "scripts": {
+    "dev": "wrangler dev src/index.ts --port 8787",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "hono": "^4.7.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0",
+    "typescript": "^5.7.0",
+    "@cloudflare/workers-types": "^4.20250501.0"
+  }
+}

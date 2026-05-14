@@ -1,0 +1,32 @@
+{
+  "name": "ipmobi-cloudflare",
+  "version": "1.0.0",
+  "private": true,
+  "description": "IPMOBI — Cloudflare Workers + Pages Infrastructure",
+  "scripts": {
+    "dev": "wrangler dev",
+    "dev:worker": "wrangler dev worker/src/index.ts --port 8787",
+    "deploy:worker": "wrangler deploy",
+    "deploy:worker:staging": "wrangler deploy --env staging",
+    "deploy:pages": "npm run build:client-a && npm run build:client-b && npm run build:landing && npm run pages:publish",
+    "build:client-a": "cd web-client-a && npm run build",
+    "build:client-b": "cd web-client-b && npm run build",
+    "build:landing": "cd web-landing && npm run build",
+    "pages:publish:client-a": "npx wrangler pages deploy web-client-a/dist --project-name=ipmobi-client-a",
+    "pages:publish:client-b": "npx wrangler pages deploy web-client-b/dist --project-name=ipmobi-client-b",
+    "pages:publish:landing": "npx wrangler pages deploy web-landing/dist --project-name=ipmobi-landing",
+    "pages:publish": "npm run pages:publish:client-a && npm run pages:publish:client-b && npm run pages:publish:landing",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --ext .ts,.tsx,.astro",
+    "clean": "rm -rf worker/dist web-client-a/dist web-client-b/dist web-landing/dist"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0",
+    "typescript": "^5.7.0",
+    "eslint": "^9.0.0",
+    "@cloudflare/workers-types": "^4.20250501.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,46 @@
+---
+---
+
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-card">
+      <h2 class="cta-title">Ready to Get Started?</h2>
+      <p class="cta-desc">
+        Join hundreds of businesses using IPMOBI for their proxy needs. Start with a free trial — no credit card required.
+      </p>
+      <div class="cta-actions">
+        <a href="https://portal.ipmobi.net" class="btn btn--primary btn--lg">Start Free Trial →</a>
+        <a href="mailto:sales@ipmobi.net" class="btn btn--outline btn--lg">Contact Sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-section { padding: 60px 0 100px; }
+  .cta-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 64px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-card::before {
+    content: ''; position: absolute;
+    top: -100px; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta-title { font-size: 2rem; font-weight: 800; margin-bottom: 16px; position: relative; }
+  .cta-desc {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    max-width: 500px;
+    margin: 0 auto 32px;
+    position: relative;
+  }
+  .cta-actions { display: flex; gap: 16px; justify-content: center; position: relative; }
+</style>

@@ -1,0 +1,87 @@
+---
+const faqs = [
+  {
+    q: 'What is a mobile proxy?',
+    a: 'A mobile proxy routes your traffic through real 4G/5G mobile devices. Unlike datacenter proxies, mobile IPs are assigned by cellular carriers — making them extremely hard to detect and block.',
+  },
+  {
+    q: 'How is IPMOBI different from other proxy providers?',
+    a: 'We operate our own hardware in Malaysia and Southeast Asia. You get real mobile IPs with no intermediaries, lower latency, and competitive pricing starting at $0.27/GB — a fraction of what competitors charge.',
+  },
+  {
+    q: 'What can I use IPMOBI for?',
+    a: 'Web scraping, ad verification, social media management, SEO monitoring, e-commerce automation, market research, sneaker copping, and any application requiring residential-grade IPs.',
+  },
+  {
+    q: 'Do you offer sticky sessions?',
+    a: 'Yes. You can keep the same IP for as long as needed. Perfect for maintaining login sessions or scraping workflows that require session persistence.',
+  },
+  {
+    q: 'Is there a free trial?',
+    a: 'Yes. We offer a free trial with 100MB of bandwidth so you can test our network before committing. No credit card required.',
+  },
+  {
+    q: 'Which protocols do you support?',
+    a: 'We support HTTP and HTTPS proxy protocols. Compatible with curl, Python requests, Scrapy, Puppeteer, Playwright, and any tool that supports HTTP/S proxy.',
+  },
+]
+---
+
+<section id="faq" class="section faq">
+  <div class="container">
+    <h2 class="section-title">Frequently Asked <span class="gradient-text">Questions</span></h2>
+    <p class="section-subtitle">Everything you need to know about IPMOBI.</p>
+
+    <div class="faq-list">
+      {faqs.map(f => (
+        <details class="faq-item">
+          <summary class="faq-question">{f.q}</summary>
+          <p class="faq-answer">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-list {
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .faq-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0 24px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .faq-item:hover { border-color: var(--accent); }
+  .faq-item[open] { border-color: var(--accent); }
+  .faq-question {
+    padding: 20px 0;
+    font-weight: 600;
+    font-size: 1rem;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .faq-question::-webkit-details-marker { display: none; }
+  .faq-question::after {
+    content: '+';
+    font-size: 1.2rem;
+    color: var(--accent);
+    transition: transform 0.2s;
+  }
+  .faq-item[open] .faq-question::after { transform: rotate(45deg); }
+  .faq-answer {
+    padding-bottom: 20px;
+    color: var(--text-secondary);
+    font-size: 0.92rem;
+    line-height: 1.7;
+  }
+</style>
