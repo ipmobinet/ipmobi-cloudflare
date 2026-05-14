@@ -6,6 +6,9 @@ import type { D1Database } from '@cloudflare/workers-types'
 import { healthRouter } from './routes/health'
 import { proxyRouter } from './routes/proxy'
 import { authRouter } from './routes/auth'
+import { planRouter } from './routes/plans'
+import { subRouter } from './routes/subscriptions'
+import { payRouter } from './routes/payments'
 import { DB } from './db/index'
 import type { Env } from './types/index'
 
@@ -39,10 +42,12 @@ app.use('*', async (c, next) => {
   await next()
 })
 
-// ─── Routes ────────────────────────────────────────────────
 app.route('/health', healthRouter)
-app.route('/api/v1/proxy', proxyRouter)
 app.route('/auth', authRouter)
+app.route('/api/v1/proxy', proxyRouter)
+app.route('/plans', planRouter)
+app.route('/subscriptions', subRouter)
+app.route('/payments', payRouter)
 
 app.get('/', (c) => {
   return c.json({

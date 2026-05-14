@@ -96,3 +96,35 @@ export type ProxyAssignmentRow = {
   expires_at: number
   released_at: number | null
 }
+
+export type PlanRow = {
+  id: string; name: string; traffic_gb: number; requests_limit: number
+  price_rm: number; price_usdt: number; is_active: number; sort_order: number; created_at: number
+}
+
+export type SubscriptionRow = {
+  id: string; user_id: string; plan_id: string
+  status: 'pending' | 'active' | 'expired' | 'cancelled'
+  start_at: number | null; end_at: number | null
+  traffic_used_gb: number; requests_used: number
+  created_at: number; updated_at: number
+}
+
+export type PaymentRow = {
+  id: string; user_id: string; subscription_id: string | null; plan_id: string
+  amount_rm: number; coinbase_charge_id: string | null; coinbase_hosted_url: string | null
+  status: 'pending' | 'completed' | 'failed' | 'expired'
+  paid_at: number | null; expires_at: number; created_at: number
+}
+
+export type ProxyEndpointRow = {
+  id: string; user_id: string; subscription_id: string
+  host: string; port: number; username: string; password: string; country: string
+  status: 'active' | 'expired' | 'suspended' | 'released'
+  assigned_at: number; expires_at: number; released_at: number | null
+}
+
+export type UsageRecordRow = {
+  id: string; user_id: string; subscription_id: string; endpoint_id: string | null
+  bytes: number; requests: number; date: string; created_at: number
+}
