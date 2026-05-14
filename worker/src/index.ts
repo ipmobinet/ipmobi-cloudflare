@@ -6,34 +6,8 @@ import type { D1Database } from '@cloudflare/workers-types'
 import { healthRouter } from './routes/health'
 import { proxyRouter } from './routes/proxy'
 import { authRouter } from './routes/auth'
-import { DB } from './db'
-
-// ─── Types ────────────────────────────────────────────────
-export type Env = {
-  Bindings: {
-    ENVIRONMENT: string
-    LOG_LEVEL: string
-    CORS_ORIGIN: string
-    SECRET_KEY: string
-    JWT_SECRET: string
-    DATABASE_URL: string
-    COINBASE_API_KEY: string
-    COINBASE_WEBHOOK_SECRET: string
-    SENTRY_DSN: string
-    RESEND_API_KEY: string
-    OPENAI_API_KEY: string
-    IPMOBI_DB: D1Database
-  }
-  Variables: {
-    requestId: string
-    startTime: number
-    db: DB
-    userId: string
-    userRole: string
-    userEmail: string
-    secureHeadersNonce: string
-  }
-}
+import { DB } from './db/index'
+import type { Env } from './types/index'
 
 // ─── App ──────────────────────────────────────────────────
 const app = new Hono<Env>()

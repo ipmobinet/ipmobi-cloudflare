@@ -1,6 +1,8 @@
 import { Hono } from 'hono'
-import type { Env } from '../index'
-import { hashPassword, verifyPassword, createToken, verifyToken, generateId } from '../crypto'
+import type { Env } from '../types/index'
+import { hashPassword, verifyPassword } from '../utils/crypto'
+import { createToken, verifyToken } from '../utils/jwt'
+import { generateId } from '../utils/id'
 import { requireAuth } from '../middleware/auth'
 
 export const authRouter = new Hono<Env>()

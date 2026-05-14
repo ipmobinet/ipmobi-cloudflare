@@ -1,6 +1,6 @@
 import type { Context, Next } from 'hono'
-import type { Env } from '../index'
-import { verifyToken } from '../crypto'
+import type { Env } from '../types/index'
+import { verifyToken } from '../utils/jwt'
 
 // ─── JWT Auth Middleware ─────────────────────────────────────
 export async function requireAuth(c: Context<Env>, next: Next) {

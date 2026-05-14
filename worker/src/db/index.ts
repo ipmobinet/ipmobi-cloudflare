@@ -1,89 +1,5 @@
 import type { D1Database } from '@cloudflare/workers-types'
-
-// ─── Row Types ───────────────────────────────────────────────
-export type UserRow = {
-  id: string
-  email: string
-  password_hash: string
-  full_name: string | null
-  role: 'client_b' | 'client_a' | 'admin' | 'superadmin'
-  is_active: number
-  created_at: number
-  updated_at: number
-}
-
-export type SessionRow = {
-  id: string
-  user_id: string
-  token: string
-  expires_at: number
-  created_at: number
-}
-
-export type ApiKeyRow = {
-  id: string
-  user_id: string
-  key_hash: string
-  name: string
-  last_used_at: number | null
-  expires_at: number | null
-  is_active: number
-  created_at: number
-}
-
-export type ProxyAssignmentRow = {
-  id: string
-  user_id: string
-  proxy_ip: string
-  proxy_port: number
-  country: string
-  username: string
-  password: string
-  status: 'active' | 'expired' | 'suspended'
-  bandwidth_bytes: number
-  assigned_at: number
-  expires_at: number
-  released_at: number | null
-}
-
-export type BillingRow = {
-  id: string
-  user_id: string
-  invoice_number: string
-  amount_cents: number
-  currency: string
-  status: 'pending' | 'paid' | 'overdue' | 'cancelled' | 'refunded'
-  description: string | null
-  payment_method: string | null
-  payment_tx_id: string | null
-  paid_at: number | null
-  due_at: number
-  created_at: number
-}
-
-export type AuditLogRow = {
-  id: string
-  user_id: string | null
-  action: string
-  target_type: string | null
-  target_id: string | null
-  ip_address: string | null
-  user_agent: string | null
-  created_at: number
-}
-
-export type DeviceRow = {
-  id: string
-  serial_no: string
-  user_id: string | null
-  firmware_version: string | null
-  ip_address: string | null
-  last_seen_at: number | null
-  status: 'online' | 'offline' | 'maintenance'
-  sim_usage_gb: number
-  signal_strength: number | null
-  created_at: number
-}
+import type { UserRow, SessionRow, ApiKeyRow, DeviceRow, AuditLogRow, ProxyAssignmentRow } from '../types'
 
 // ─── D1 Helpers ──────────────────────────────────────────────
 export class DB {
@@ -205,6 +121,14 @@ export class DB {
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     ).bind(id, a.user_id, a.proxy_ip, a.proxy_port, a.country,
       a.username, a.password, a.status, a.bandwidth_bytes, a.assigned_at, a.expires_at).run()
+  }
+
+  // ── Devices ────────────────────────────────
+  async findDevicesByUserId(userId: string): Promise<DeviceRow[]> {
+    const res = await this.d1.prepare(
+      'SELECT * FROM devices WHERE user_id = ? ORDER BY created_at DESC',
+    ).bind(userId).all<DeviceRow>()
+    return res.results || []
   }
 
   // ── Audit Log ──────────────────────────────
