@@ -68,9 +68,8 @@ authRouter.post('/register', async (c) => {
     await db.logAudit({
       user_id: userId,
       action: 'register',
-      resource_type: 'user',
-      resource_id: userId,
-      details: JSON.stringify({ email: body.email }),
+      target_type: 'user',
+      target_id: userId,
       ip_address: c.req.header('CF-Connecting-IP') || null,
       user_agent: c.req.header('user-agent') || null,
       created_at: now,
@@ -168,9 +167,8 @@ authRouter.post('/login', async (c) => {
       await db.logAudit({
         user_id: user.id,
         action: 'login',
-        resource_type: 'user',
-        resource_id: user.id,
-        details: '{}',
+        target_type: 'user',
+        target_id: user.id,
         ip_address: c.req.header('CF-Connecting-IP') || null,
         user_agent: c.req.header('user-agent') || null,
         created_at: now,

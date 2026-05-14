@@ -65,9 +65,8 @@ export type AuditLogRow = {
   id: string
   user_id: string | null
   action: string
-  resource_type: string | null
-  resource_id: string | null
-  details: string | null
+  target_type: string | null
+  target_id: string | null
   ip_address: string | null
   user_agent: string | null
   created_at: number
@@ -212,10 +211,10 @@ export class DB {
   async logAudit(entry: Omit<AuditLogRow, 'id'> & { id?: string }): Promise<void> {
     const id = entry.id || crypto.randomUUID()
     await this.d1.prepare(
-      `INSERT INTO audit_logs (id, user_id, action, resource_type, resource_id, details, ip_address, user_agent, created_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    ).bind(id, entry.user_id, entry.action, entry.resource_type,
-      entry.resource_id, entry.details, entry.ip_address, entry.user_agent,
+      `INSERT INTO audit_logs (id, user_id, action, target_type, target_id, ip_address, user_agent, created_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+    ).bind(id, entry.user_id, entry.action, entry.target_type,
+      entry.target_id, entry.ip_address, entry.user_agent,
       entry.created_at || Math.floor(Date.now() / 1000)).run()
   }
 
