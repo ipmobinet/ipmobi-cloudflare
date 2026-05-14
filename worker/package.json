@@ -4,8 +4,10 @@
   "private": true,
   "description": "IPMOBI API — Cloudflare Worker (Hono)",
   "scripts": {
-    "dev": "wrangler dev src/index.ts --port 8787",
-    "deploy": "wrangler deploy",
+    "db:init": "wrangler d1 execute ipmobi-db --file=src/db/schema.sql",
+    "db:migrate": "wrangler d1 migrations apply ipmobi-db --remote",
+    "dev": "wrangler dev src/index.ts --port 8787 --remote",
+    "deploy:worker": "wrangler deploy",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

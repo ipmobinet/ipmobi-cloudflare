@@ -40,7 +40,7 @@ SENTRY_ENVIRONMENT = "staging"
 ENVIRONMENT = "development"
 LOG_LEVEL = "debug"
 CORS_ORIGIN = "*"
-JWT_SECRET = ""  # 用户生成随机字符串填入
+JWT_SECRET = "jwt-secret-ipmobi-dev-2026"  # 生产环境请更换
 
 # ─── Secrets (set via `npx wrangler secret put <KEY>`) ──
 # SECRET_KEY
