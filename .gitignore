@@ -5,3 +5,7 @@ dist/
 *.log
 .DS_Store
 .wrangler/
+*.tsbuildinfo
+*.js
+!.astro/
+.astro/

@@ -63,11 +63,12 @@ CORS_ORIGIN = "*"
 # bucket_name = "ipmobi-assets"
 
 # ─── D1 Database ──────────────────────────────
-# [[d1_databases]]
-# binding = "IPMOBI_DB"
-# database_name = "ipmobi-db"
-# database_id = ""
-# preview_database_id = ""
+[[d1_databases]]
+binding = "IPMOBI_DB"
+database_name = "ipmobi-db"
+database_id = "2865e1b7-ce24-45d7-b394-cb1f4eb28b19"
+preview_database_id = "2865e1b7-ce24-45d7-b394-cb1f4eb28b19"
+migrations_dir = "migrations"
 
 # ─── Queues ───────────────────────────────────
 # [[queues.producers]]

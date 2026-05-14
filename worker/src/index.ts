@@ -2,9 +2,11 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
 import { secureHeaders } from 'hono/secure-headers'
+import type { D1Database } from '@cloudflare/workers-types'
 import { healthRouter } from './routes/health'
 import { proxyRouter } from './routes/proxy'
 import { authRouter } from './routes/auth'
+import { DB } from './db'
 
 // ─── Types ────────────────────────────────────────────────
 export type Env = {
@@ -20,14 +22,16 @@ export type Env = {
     SENTRY_DSN: string
     RESEND_API_KEY: string
     OPENAI_API_KEY: string
-    // KV / R2 / D1 bindings — uncomment when provisioned
-    // IPMOBI_KV: KVNamespace
-    // IPMOBI_ASSETS: R2Bucket
-    // IPMOBI_DB: D1Database
+    IPMOBI_DB: D1Database
   }
   Variables: {
     requestId: string
     startTime: number
+    db: DB
+    userId: string
+    userRole: string
+    userEmail: string
+    secureHeadersNonce: string
   }
 }
 
@@ -52,10 +56,11 @@ app.use(
   }),
 )
 
-// ─── Request ID ────────────────────────────────────────────
+// ─── Request ID + DB ─────────────────────────────────────
 app.use('*', async (c, next) => {
   c.set('requestId', crypto.randomUUID())
   c.set('startTime', Date.now())
+  c.set('db', new DB(c.env.IPMOBI_DB))
   c.header('X-Request-ID', c.get('requestId'))
   await next()
 })
@@ -65,7 +70,6 @@ app.route('/health', healthRouter)
 app.route('/api/v1/proxy', proxyRouter)
 app.route('/api/v1/auth', authRouter)
 
-// ─── Root ──────────────────────────────────────────────────
 app.get('/', (c) => {
   return c.json({
     message: 'IPMOBI API v1',
@@ -92,7 +96,6 @@ app.onError((err, c) => {
   const requestId = c.get('requestId')
   console.error(`[${requestId}] Unhandled error:`, err)
 
-  // Report to Sentry if configured
   const sentryDsn = c.env.SENTRY_DSN
   if (sentryDsn) {
     // TODO: send to Sentry via fetch
