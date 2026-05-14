@@ -40,6 +40,7 @@ SENTRY_ENVIRONMENT = "staging"
 ENVIRONMENT = "development"
 LOG_LEVEL = "debug"
 CORS_ORIGIN = "*"
+JWT_SECRET = ""  # 用户生成随机字符串填入
 
 # ─── Secrets (set via `npx wrangler secret put <KEY>`) ──
 # SECRET_KEY
@@ -48,27 +49,19 @@ CORS_ORIGIN = "*"
 # SENTRY_DSN
 # DATABASE_URL
 # RESEND_API_KEY
-# JWT_SECRET
 # OPENAI_API_KEY
-
-# ─── KV Namespaces ────────────────────────────
-# [[kv_namespaces]]
-# binding = "IPMOBI_KV"
-# id = ""
-# preview_id = ""
-
-# ─── R2 Buckets ───────────────────────────────
-# [[r2_buckets]]
-# binding = "IPMOBI_ASSETS"
-# bucket_name = "ipmobi-assets"
 
 # ─── D1 Database ──────────────────────────────
 [[d1_databases]]
 binding = "IPMOBI_DB"
 database_name = "ipmobi-db"
-database_id = "2865e1b7-ce24-45d7-b394-cb1f4eb28b19"
-preview_database_id = "2865e1b7-ce24-45d7-b394-cb1f4eb28b19"
+database_id = ""  # 用户创建 D1 后填入
 migrations_dir = "migrations"
+
+# ─── R2 Buckets ───────────────────────────────
+# [[r2_buckets]]
+# binding = "IPMOBI_ASSETS"
+# bucket_name = "ipmobi-assets"
 
 # ─── Queues ───────────────────────────────────
 # [[queues.producers]]
