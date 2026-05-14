@@ -40,7 +40,6 @@ SENTRY_ENVIRONMENT = "staging"
 ENVIRONMENT = "development"
 LOG_LEVEL = "debug"
 CORS_ORIGIN = "*"
-JWT_SECRET = "jwt-secret-ipmobi-dev-2026"  # 生产环境请更换
 
 # ─── Secrets (set via `npx wrangler secret put <KEY>`) ──
 # SECRET_KEY
@@ -55,7 +54,7 @@ JWT_SECRET = "jwt-secret-ipmobi-dev-2026"  # 生产环境请更换
 [[d1_databases]]
 binding = "IPMOBI_DB"
 database_name = "ipmobi-db"
-database_id = ""  # 用户创建 D1 后填入
+database_id = "2865e1b7-ce24-45d7-b394-cb1f4eb28b19"
 migrations_dir = "migrations"
 
 # ─── R2 Buckets ───────────────────────────────
