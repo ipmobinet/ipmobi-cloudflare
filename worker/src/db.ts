@@ -73,6 +73,19 @@ export type AuditLogRow = {
   created_at: number
 }
 
+export type DeviceRow = {
+  id: string
+  serial_no: string
+  user_id: string | null
+  firmware_version: string | null
+  ip_address: string | null
+  last_seen_at: number | null
+  status: 'online' | 'offline' | 'maintenance'
+  sim_usage_gb: number
+  signal_strength: number | null
+  created_at: number
+}
+
 // ─── D1 Helpers ──────────────────────────────────────────────
 export class DB {
   private d1: D1Database
