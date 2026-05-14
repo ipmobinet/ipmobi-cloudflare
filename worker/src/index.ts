@@ -68,7 +68,7 @@ app.use('*', async (c, next) => {
 // ─── Routes ────────────────────────────────────────────────
 app.route('/health', healthRouter)
 app.route('/api/v1/proxy', proxyRouter)
-app.route('/api/v1/auth', authRouter)
+app.route('/auth', authRouter)
 
 app.get('/', (c) => {
   return c.json({
